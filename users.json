@@ -1,0 +1,84 @@
+[
+  {
+    "id": 0,
+    "email": "bob@mail.com",
+    "password": "secret",
+    "profile": {
+      "firstname": "Bob",
+      "lastname": "Kravengher",
+      "avatar": "avatar.png",
+      "description": "",
+      "email": false
+    },
+    "posts": [
+      {
+        "id": 0,
+        "message": "Hello",
+        "date": 0,
+        "visibility": "public",
+        "comments": [
+          {
+            "id": 0,
+            "id_user": 0,
+            "message": "World !",
+            "date": 0
+          }
+        ],
+        "likes": [
+          {
+            "id_user": 0
+          }
+        ]
+      }
+    ],
+    "network": [
+      {
+        "id_user": 1,
+        "status": "confirmed"
+      },
+      {
+        "id_user": 2,
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "email": "marc@mail.com",
+    "password": "secret",
+    "profile": {
+      "firstname": "Marc",
+      "lastname": "Frostenborg",
+      "avatar": "avatar.png",
+      "description": "Hello my name is Marc",
+      "email": false
+    },
+    "posts": [
+      {
+        "id": 0,
+        "message": "Hello",
+        "date": 0,
+        "visibility": "private",
+        "comments": [
+          {
+            "id": 0,
+            "id_user": 1,
+            "message": "World !",
+            "date": 0
+          }
+        ],
+        "likes": [
+          {
+            "id_user": 1
+          }
+        ]
+      }
+    ],
+    "network": [
+      {
+        "id_user": 0,
+        "status": "confirmed"
+      }
+    ]
+  }
+]

@@ -1,0 +1,93 @@
+use("linkedin");
+
+// db.user.find()
+
+// // create user
+
+// // db.user.insertOne(
+// //     {
+// //         id: 2,
+// //         email: "bob2@mail.com",
+// //         password: "secret",
+// //         profile: {
+// //             firstname: "Bob",
+// //             lastname: "Kravengher",
+// //             avatar: "avatar.png",
+// //             email: false
+// //         },
+// //         posts: [],
+// //         network: []
+// //     }
+// // )
+
+// // create post
+
+// db.user.updateOne(
+//     {id: 2},
+//     {$addToSet: {
+//         posts: {
+//             id: 0,
+//             message: "Bonjour",
+//             date: new Date().getTime(),
+//             visibility: "public",
+//             comments: [],
+//             likes: []
+//         }
+//     }}
+// )
+
+// // comment a post
+
+// db.user.updateOne(
+//     {id: 2, "posts.id": 0},
+//     {$addToSet: {"posts.$.comments": {
+//         id: 0,
+//         id_user: 1,
+//         message: "Salut",
+//         date: new Date().getTime()
+//     }}}
+// )
+
+// // like a post
+
+// db.user.updateOne(
+//     {id: 2, "posts.id": 0},
+//     {$addToSet: {"posts.$.likes": {
+//         id_user: 1,
+//     }}}
+// )
+
+// // add to network
+
+// db.user.updateOne(
+//     {id: 2},
+//     {$addToSet: {network: {
+//         id_user: 1,
+//     }}}
+// )
+
+// // get all posts from all users
+
+// db.user.find(
+//     {},
+//     {
+//         _id: 0,
+//         posts: 1,
+//         profile: 1
+//     }
+// )
+
+// delete one user
+
+// db.user.deleteOne({id: 2})
+
+// show all public posts and posts of person wich are in network
+
+db.user.aggregate({
+  $match: {
+    $or: [
+      { network: { $all: [1] } },
+      { "posts.visibility": { $eq: "public" } },
+    ],
+  },
+});
