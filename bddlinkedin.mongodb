@@ -2,23 +2,42 @@ use("linkedin");
 
 // db.user.find()
 
-// // create user
+// create user (inscription)
 
-// // db.user.insertOne(
-// //     {
-// //         id: 2,
-// //         email: "bob2@mail.com",
-// //         password: "secret",
-// //         profile: {
-// //             firstname: "Bob",
-// //             lastname: "Kravengher",
-// //             avatar: "avatar.png",
-// //             email: false
-// //         },
-// //         posts: [],
-// //         network: []
-// //     }
-// // )
+// db.user.insertOne({
+//   id: 2,
+//   email: "bob2@mail.com",
+//   password: "secret",
+//   profile: {
+//     firstname: "Bob",
+//     lastname: "Kravengher",
+//     avatar: "avatar.png",
+//     email: false,
+//   },
+//   posts: [],
+//   network: [],
+// });
+
+// get a user (connection)
+// db.user.find({ email: { $eq: "bob@mail.com" }, password: { $eq: "secret" } });
+
+// get informations about a user
+//db.user.find({ id: { $eq: 1 } }, { profile: 1, posts: 1 });
+
+// modify user's information
+// db.user.updateOne(
+//   {id: 1},
+//   {$set: {
+//     email: "test@mail.com"
+//     profile: {
+//       "firstname": "Marc",
+//       "lastname": "Frostenborg",
+//       "avatar": "avatar.png",
+//       "email": true
+//     }
+//   }}
+// )
+//db.user.find({ id: { $eq: 1 } }, { profile: 1, posts: 1 });
 
 // // create post
 
@@ -36,6 +55,31 @@ use("linkedin");
 //     }}
 // )
 
+// modify a post
+
+// db.user.updateOne(
+//   {id: 0},
+//   {$set: {"posts.$[post].message": "OK"}},
+//   {arrayFilters : [{"post.id": {$eq: 0}}]}
+// )
+
+//db.user.find({ id: { $eq: 0 } }, { profile: 1, posts: 1 });
+
+// delete a post
+
+// db.user.updateMany(
+//   { id: 0 },
+//   {
+//     $pull: {
+//       posts: { message: "OK", id: 0 },
+//     },
+//   }
+// );
+//db.user.aggregate({ $match: { id: 0 } });
+
+// get all post from all user except one
+// db.user.find({ id: { $ne: 0 } }, { posts: 1, profile: 1, _id: 0 }).limit(1);
+
 // // comment a post
 
 // db.user.updateOne(
@@ -47,6 +91,21 @@ use("linkedin");
 //         date: new Date().getTime()
 //     }}}
 // )
+
+// modify a comment on a post
+// db.user.updateOne(
+//   { id: 1 },
+//   { $set: { "posts.$[post].comments.$[comment].message": "Za warudo !" } },
+//   { arrayFilters: [{ "post.id": { $eq: 0 } }, { "comment.id": { $eq: 0 } }] }
+// );
+
+// delete a comment on a post
+// db.user.updateOne(
+//   { id: 1 },
+//   { $pull: { "posts.$[post].comments": { id: 0 } } },
+//   { arrayFilters: [{ "post.id": { $eq: 0 } }] }
+// );
+// db.user.find();
 
 // // like a post
 
@@ -66,6 +125,11 @@ use("linkedin");
 //     }}}
 // )
 
+//remove from network
+
+// db.user.updateOne({ id: 1 }, { $pull: { network: { id_user: 0 } } });
+// db.user.find();
+
 // // get all posts from all users
 
 // db.user.find(
@@ -83,11 +147,11 @@ use("linkedin");
 
 // show all public posts and posts of person wich are in network
 
-db.user.aggregate({
-  $match: {
-    $or: [
-      { network: { $all: [1] } },
-      { "posts.visibility": { $eq: "public" } },
-    ],
-  },
-});
+// db.user.aggregate({
+//   $match: {
+//     $or: [
+//       { network: { $all: [1] } },
+//       { "posts.visibility": { $eq: "public" } },
+//     ],
+//   },
+// });
