@@ -1,2 +1,4 @@
 node_modules
 pets/
+.parcel-cache
+dist

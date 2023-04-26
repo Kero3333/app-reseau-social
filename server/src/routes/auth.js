@@ -7,7 +7,6 @@ auth.post("/signin", async (req, res) => {
     const { email, password } = req.body;
 
     const user = await database.collection("user").findOne({ email, password });
-
     if (!user) {
       return res.sendStatus(404);
     }
@@ -24,7 +23,7 @@ auth.post("/signup", async (req, res) => {
     const { email, password, firstname, lastname } = req.body;
     const user = await database.collection("user").findOne({ email });
     if (user) return res.send("this email is already used");
-    const id = (
+    const { id } = (
       await database.collection("user").insertOne({
         email: email,
         password: password,
