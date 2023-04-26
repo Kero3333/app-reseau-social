@@ -1,0 +1,122 @@
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+### Connexion d'un utilisateur
+POST http://{{host}}/api/auth/signin
+Content-Type: application/json
+
+{
+    "email": "bob@mail.com",
+    "password": "secret"
+}
+
+### Creation d'un utilisateur
+POST http://{{host}}/api/auth/signup
+Content-Type: application/json
+
+{
+    "email": "bobby@mail.com",
+    "password": "secret",
+    "firstname": "bob",
+    "lastname": "by"
+}
+
+### Récupérer les infos d'un utilisateur
+GET http://{{host}}/api/user/6447c6ebe3816e8b5f6baa19
+
+### Modifier les infos de l'utilisateur
+POST http://{{host}}/api/user/6447c6ebe3816e8b5f6baa19
+Content-Type: application/json
+
+{
+    "email": "bob@mail.com",
+    "password": "secret",
+    "firstname": "bob",
+    "lastname": "Miller",
+    "avatar": "avatar.png",
+    "emailVisibility": false
+}
+
+### Ajouter un post
+POST http://{{host}}/api/post/add
+Content-Type: application/json
+
+{
+    "id": "6447c6ebe3816e8b5f6baa19",
+    "message": "OK",
+    "visibility": "public"
+}
+
+### Supprimer un post
+POST http://{{host}}/api/post/remove
+Content-Type: application/json
+
+{
+    "id": "6447c6ebe3816e8b5f6baa19",
+    "postId": 1
+}
+
+### Ajouter/supprimer un like d'un post 
+POST http://{{host}}/api/post/like
+Content-Type: application/json
+
+{
+    "id": "6447c6ebe3816e8b5f6baa19",
+    "postId": 2,
+    "userId": "6447c6ebe3816e8b5f6baa19"
+}
+
+
+### Ajouter un commentaire d'un post 
+POST http://{{host}}/api/post/comment/add
+Content-Type: application/json
+
+{
+    "id": "6447c6ebe3816e8b5f6baa19",
+    "postId": 2,
+    "userId": "6447c6ebe3816e8b5f6baa19",
+    "message": "Bonjour"
+}
+
+### Modifier un commentaire d'un post 
+POST http://{{host}}/api/post/comment/modify
+Content-Type: application/json
+
+{
+    "id": "6447c6ebe3816e8b5f6baa19",
+    "postId": 2,
+    "commentId": 1,
+    "message": "OK"
+}
+
+### Supprimer un commentaire d'un post 
+DELETE http://{{host}}/api/post/comment/remove
+Content-Type: application/json
+
+{
+    "id": "6447c6ebe3816e8b5f6baa19",
+    "postId": 2,
+    "commentId": 0
+}
+
+### Demande d'ajout à son réseau 
+POST http://{{host}}/api/network/add
+Content-Type: application/json
+
+{
+    "id": "6447c6ebe3816e8b5f6baa19",
+    "userId": "6447c6ebe3816e8b5f6baa1a"
+}
+
+### Suppression d'un compte à son réseau 
+DELETE  http://{{host}}/api/network/
+Content-Type: application/json
+
+{
+    "id": "6447c6ebe3816e8b5f6baa19",
+    "userId": "6447c6ebe3816e8b5f6baa1a"
+}
+
+### Récupérer les posts des autres utilisateur
+GET  http://{{host}}/api/posts/1

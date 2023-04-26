@@ -1,6 +1,21 @@
 use("linkedin");
 
-// db.user.find()
+// db.user.findOne(
+//   { _id: ObjectId("6447c6ebe3816e8b5f6baa19") },
+//   { profile: 1, posts: 1 }
+// );
+
+// db.user.aggregate(
+//   { $match: { _id: ObjectId("6447c6ebe3816e8b5f6baa19") } },
+//   { $unwind: "$posts" },
+//   { $match: { "posts.id": 2 } },
+//   { $unwind: "$posts.comments" },
+//   { $sort: { "posts.comments": -1 } },
+//   { $replaceRoot: { newRoot: "$posts.comments" } },
+//   { $project: { id: 1, _id: 0 } }
+// );
+
+db.user.find();
 
 // create user (inscription)
 
@@ -42,36 +57,38 @@ use("linkedin");
 // // create post
 
 // db.user.updateOne(
-//     {id: 2},
-//     {$addToSet: {
-//         posts: {
-//             id: 0,
-//             message: "Bonjour",
-//             date: new Date().getTime(),
-//             visibility: "public",
-//             comments: [],
-//             likes: []
-//         }
-//     }}
-// )
+//   { _id: ObjectId("6447c6ebe3816e8b5f6baa19") },
+//   {
+//     $addToSet: {
+//       posts: {
+//         id: 1,
+//         message: "Bonjour",
+//         date: new Date().getTime(),
+//         visibility: "public",
+//         comments: [],
+//         likes: [],
+//       },
+//     },
+//   }
+// );
 
 // modify a post
 
 // db.user.updateOne(
-//   {id: 0},
-//   {$set: {"posts.$[post].message": "OK"}},
-//   {arrayFilters : [{"post.id": {$eq: 0}}]}
-// )
+//   { _id: ObjectId("6447c6ebe3816e8b5f6baa19") },
+//   { $set: { "posts.$[post].message": "OK" } },
+//   { arrayFilters: [{ "post.id": { $eq: 0 } }] }
+// );
 
 //db.user.find({ id: { $eq: 0 } }, { profile: 1, posts: 1 });
 
 // delete a post
 
 // db.user.updateMany(
-//   { id: 0 },
+//   { _id: ObjectId("6447c6ebe3816e8b5f6baa19") },
 //   {
 //     $pull: {
-//       posts: { message: "OK", id: 0 },
+//       posts: { id: 0 },
 //     },
 //   }
 // );
@@ -110,11 +127,28 @@ use("linkedin");
 // // like a post
 
 // db.user.updateOne(
-//     {id: 2, "posts.id": 0},
-//     {$addToSet: {"posts.$.likes": {
-//         id_user: 1,
-//     }}}
-// )
+//   { _id: ObjectId("6447c6ebe3816e8b5f6baa19"), "posts.id": 2 },
+//   {
+//     $addToSet: {
+//       "posts.$.likes": {
+//         id_user: ObjectId("6447c6ebe3816e8b5f6baa19"),
+//       },
+//     },
+//   }
+// );
+
+// db.user.aggregate(
+//   { $match: { _id: ObjectId("6447c6ebe3816e8b5f6baa19") } },
+//   { $unwind: "$posts" },
+//   {
+//     $match: {
+//       "posts.id": 2,
+//     },
+//   },
+//   { $unwind: "$posts.likes" },
+//   { $match: { "posts.likes.id_user": ObjectId("6447c6ebe3816e8b5f6baa19") } },
+//   { $project: { "posts.likes.id_user": 1, _id: 0 } }
+// );
 
 // // add to network
 
@@ -127,8 +161,11 @@ use("linkedin");
 
 //remove from network
 
-// db.user.updateOne({ id: 1 }, { $pull: { network: { id_user: 0 } } });
-// db.user.find();
+db.user.updateOne(
+  { _id: ObjectId("6447c6ebe3816e8b5f6baa1a") },
+  { $pull: { network: { id_user: ObjectId("6447c6ebe3816e8b5f6baa19") } } }
+);
+db.user.find();
 
 // // get all posts from all users
 

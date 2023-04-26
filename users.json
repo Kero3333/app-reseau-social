@@ -1,6 +1,5 @@
 [
   {
-    "id": 0,
     "email": "bob@mail.com",
     "password": "secret",
     "profile": {
@@ -43,7 +42,6 @@
     ]
   },
   {
-    "id": 1,
     "email": "marc@mail.com",
     "password": "secret",
     "profile": {
