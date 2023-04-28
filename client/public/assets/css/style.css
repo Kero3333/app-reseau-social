@@ -145,7 +145,6 @@ body {
   overflow-y: auto;
 }
 .profile .comment {
-  border: 1px solid black;
   padding: 0.5rem;
   width: 90%;
   align-items: center;
