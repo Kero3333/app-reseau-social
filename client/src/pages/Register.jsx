@@ -35,7 +35,7 @@ export const Register = ({ setToken }) => {
         <button type="submit">Register</button>
       </form>
       <span>
-        You have already an account ? login <a href="/login">now</a>
+        You already have an account ? login <a href="/login">now</a>
       </span>
     </div>
   );

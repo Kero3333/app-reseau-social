@@ -4,11 +4,13 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+import { Profile } from "./pages/Profile";
 
-import "../public/style.css";
+import "../public/assets/css/style.css";
 
 const root = document.querySelector("#root");
 const app = createRoot(root);
+
 const App = () => {
   const [token, setToken] = useState();
 
@@ -22,13 +24,14 @@ const App = () => {
       {token ? (
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/profile" element={<Profile token={token} />} />
+          {/* <Route path="*" element={<Navigate to="/" />} /> */}
         </Routes>
       ) : (
         <Routes>
           <Route path="/login" element={<Login setToken={setToken} />} />
           <Route path="/register" element={<Register setToken={setToken} />} />
-          <Route path="*" element={<Navigate to="/login" />} />
+          {/* <Route path="*" element={<Navigate to="/login" />} /> */}
         </Routes>
       )}
     </BrowserRouter>

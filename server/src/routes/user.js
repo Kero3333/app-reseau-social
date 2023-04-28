@@ -10,7 +10,10 @@ user.get("/:id", async (req, res) => {
     const _id = new ObjectId(req.params.id);
     const user = await database
       .collection("user")
-      .findOne({ _id }, { projection: { profile: 1, posts: 1, network: 1 } });
+      .findOne(
+        { _id },
+        { projection: { email: 1, profile: 1, posts: 1, network: 1 } }
+      );
     if (!user) return res.sendStatus(404);
     return res.send(user);
   } catch (e) {
