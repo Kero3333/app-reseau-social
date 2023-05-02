@@ -12,6 +12,8 @@ export const Comment = ({
   const [dateFormat, setDateFormat] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+  const [toModified, setToModified] = useState(false);
+  const [message, setMessage] = useState(comment.message);
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/user/${comment.id_user}`)
@@ -61,6 +63,39 @@ export const Comment = ({
     setShowOptions(false);
   };
 
+  const handleClickModify = () => {
+    setToModified(true);
+  };
+
+  const handleChange = (e) => {
+    setMessage(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key == "Enter") {
+      const message = e.target.value;
+
+      const data = {
+        id: userId,
+        postId,
+        commentId: comment.id,
+        message,
+      };
+
+      fetch("http://localhost:3000/api/post/comment/modify", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => {
+          if (res.status == 200) setToModified(false);
+        })
+        .catch((e) => console.error(e));
+    }
+  };
+
   return !isRemoved ? (
     <div
       className="comment"
@@ -81,11 +116,25 @@ export const Comment = ({
         </div>
         <span>{dateFormat}</span>
       </div>
-      <div className="message">{comment.message}</div>
+      {toModified ? (
+        <div className="message">
+          <input
+            name="message"
+            value={message}
+            onKeyDown={handleKeyDown}
+            onChange={handleChange}
+          />
+        </div>
+      ) : (
+        <div className="message">{message}</div>
+      )}
       {comment.id_user == localStorage.getItem("token") && showOptions ? (
         <div className="options">
           <span className="remove-comment" onClick={handleClickRemove}>
             remove
+          </span>
+          <span className="modify-comment" onClick={handleClickModify}>
+            modify
           </span>
         </div>
       ) : null}

@@ -161,7 +161,9 @@ post.post("/comment/add", async (req, res) => {
       }
     );
     if (!matchedCount) return res.sendStatus(400);
-    res.sendStatus(201);
+    res
+      .status(201)
+      .send({ id: (lastComment?.id > -1 ? lastComment.id : -1) + 1 });
   } catch (e) {
     console.error(e);
     res.sendStatus(500);

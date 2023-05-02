@@ -213,7 +213,11 @@ nav ul > li a {
 .comment .options .remove-comment {
   color: red;
 }
-.comment .options .remove-comment:hover {
+.comment .options .modify-comment {
+  color: blue;
+  margin-right: 0.5rem;
+}
+.comment .options > span:hover {
   cursor: pointer;
   text-decoration: underline;
 }

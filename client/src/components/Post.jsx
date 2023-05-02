@@ -73,23 +73,17 @@ export const Post = ({ userId, profile, post }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
-        .then((res) => {
-          console.log(res);
-          if (res.status == 201) {
-            const commentId =
-              post.comments.length > 0
-                ? post.comments[post.comments.length - 1].id + 1
-                : 1;
-            post.comments.push({
-              id: commentId,
-              id_user: id,
-              message,
-              date: new Date().getTime(),
-            });
-            setComments(post.comments);
-            setNbComments(nbComments + 1);
-            e.target.value = "";
-          }
+        .then((res) => res.json())
+        .then((data) => {
+          post.comments.push({
+            id: data.id,
+            id_user: id,
+            message,
+            date: new Date().getTime(),
+          });
+          setComments(post.comments);
+          setNbComments(nbComments + 1);
+          e.target.value = "";
         })
         .catch((e) => console.error(e));
     }
