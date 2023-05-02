@@ -138,8 +138,16 @@ export const Post = ({ userId, profile, post }) => {
           <div className="comments-content">
             {comments ? (
               post.comments.map((comment, i) => {
-                console.log("ici");
-                return <Comment key={i} comment={comment} />;
+                return (
+                  <Comment
+                    key={i}
+                    comment={comment}
+                    userId={userId}
+                    postId={post.id}
+                    nbComments={nbComments}
+                    setNbComments={setNbComments}
+                  />
+                );
               })
             ) : (
               <span>no comments</span>
