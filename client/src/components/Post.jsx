@@ -11,6 +11,7 @@ export const Post = ({ userId, profile, post }) => {
   const [nbLikes, setNbLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [displayComments, setDisplayComments] = useState(false);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     setPostId(`${userId}-${post.id}`);
@@ -22,6 +23,7 @@ export const Post = ({ userId, profile, post }) => {
     setDateFormat(`${date.getDate()}/${month}/${date.getFullYear()}`);
     setNbLikes(post.likes.length);
     setNbComments(post.comments.length);
+    setComments(post.comments);
 
     const idUser = localStorage.getItem("token");
     const userIsInLikesArr = post.likes.findIndex((el) => el.id_user == idUser);
@@ -29,7 +31,7 @@ export const Post = ({ userId, profile, post }) => {
     if (userIsInLikesArr > -1) setIsLiked(true);
   }, [post]);
 
-  handleClick = () => {
+  const handleClick = () => {
     displayComments ? setDisplayComments(false) : setDisplayComments(true);
   };
 
@@ -52,6 +54,45 @@ export const Post = ({ userId, profile, post }) => {
         isLiked ? setNbLikes(nbLikes - 1) : setNbLikes(nbLikes + 1);
       })
       .catch((e) => console.error(e));
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key == "Enter") {
+      const message = e.target.value;
+      if (message.length < 1) return false;
+      const id = localStorage.getItem("token");
+      const data = {
+        id,
+        postId: post.id,
+        userId: userId,
+        message,
+      };
+
+      fetch("http://localhost:3000/api/post/comment/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+        .then((res) => {
+          console.log(res);
+          if (res.status == 201) {
+            const commentId =
+              post.comments.length > 0
+                ? post.comments[post.comments.length - 1].id + 1
+                : 1;
+            post.comments.push({
+              id: commentId,
+              id_user: id,
+              message,
+              date: new Date().getTime(),
+            });
+            setComments(post.comments);
+            setNbComments(nbComments + 1);
+            e.target.value = "";
+          }
+        })
+        .catch((e) => console.error(e));
+    }
   };
 
   return (
@@ -89,10 +130,15 @@ export const Post = ({ userId, profile, post }) => {
       </div>
       {displayComments ? (
         <div className="comments-section">
-          <input type="text" placeholder="Write a comment" />
+          <input
+            type="text"
+            placeholder="Write a comment"
+            onKeyDown={handleKeyDown}
+          />
           <div className="comments-content">
-            {post.comments ? (
+            {comments ? (
               post.comments.map((comment, i) => {
+                console.log("ici");
                 return <Comment key={i} comment={comment} />;
               })
             ) : (
