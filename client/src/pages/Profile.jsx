@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Banner } from "../components/Banner";
 import { Post } from "../components/Post";
 import { Navbar } from "../components/Navbar";
+import { Network } from "../components/Network";
 
 export const Profile = ({ token }) => {
   const [profile, setProfile] = useState({});
@@ -46,10 +47,7 @@ export const Profile = ({ token }) => {
         </div>
         <div className="network-container">
           <div></div>
-          <div className="network">
-            <h2>Network</h2>
-            <div className="network-content"></div>
-          </div>
+          <Network network={network} />
         </div>
       </div>
     </>

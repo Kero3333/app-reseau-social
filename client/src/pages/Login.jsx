@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 export const Login = ({ setToken }) => {
   handleSubmit = (e) => {
     e.preventDefault();

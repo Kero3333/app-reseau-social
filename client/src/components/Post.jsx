@@ -4,6 +4,7 @@ import defaultAvatar from "../../public/assets/img/profile-default.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
+
 export const Post = ({ userId, profile, post }) => {
   const [postId, setPostId] = useState("");
   const [dateFormat, setDateFormat] = useState("");

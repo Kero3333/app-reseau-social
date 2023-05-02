@@ -39,7 +39,7 @@ export const Comment = ({
       commentId: comment.id,
     };
 
-    fetch("http://localhost:3000/api/post/comment/remove", {
+    fetch("http://localhost:3000/api/post/comment", {
       method: "DELETE",
       headers: {
         "content-type": "application/json",

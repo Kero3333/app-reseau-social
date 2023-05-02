@@ -49,7 +49,7 @@ Content-Type: application/json
 }
 
 ### Supprimer un post
-POST http://{{host}}/api/post/remove
+DELETE http://{{host}}/api/post
 Content-Type: application/json
 
 {
@@ -91,7 +91,7 @@ Content-Type: application/json
 }
 
 ### Supprimer un commentaire d'un post 
-DELETE http://{{host}}/api/post/comment/remove
+DELETE http://{{host}}/api/post/comment
 Content-Type: application/json
 
 {

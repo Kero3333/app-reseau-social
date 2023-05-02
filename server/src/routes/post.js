@@ -64,7 +64,7 @@ post.post("/modify", async (req, res) => {
   }
 });
 
-post.post("/remove", async (req, res) => {
+post.delete("/", async (req, res) => {
   try {
     const { id, postId } = req.body;
     const { modifiedCount } = await database.collection("user").updateOne(
