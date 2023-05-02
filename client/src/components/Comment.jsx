@@ -11,6 +11,7 @@ export const Comment = ({
   const [profile, setProfile] = useState({});
   const [dateFormat, setDateFormat] = useState("");
   const [isRemoved, setIsRemoved] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/user/${comment.id_user}`)
@@ -52,8 +53,20 @@ export const Comment = ({
       .catch((e) => console.error(e));
   };
 
+  const handleOnMouseOver = () => {
+    setShowOptions(true);
+  };
+
+  const handleOnMouseLeave = () => {
+    setShowOptions(false);
+  };
+
   return !isRemoved ? (
-    <div className="comment">
+    <div
+      className="comment"
+      onMouseOver={handleOnMouseOver}
+      onMouseLeave={handleOnMouseLeave}
+    >
       <div className="comment-infos">
         <div className="comment-profile">
           <div className="comment-image">
@@ -69,9 +82,11 @@ export const Comment = ({
         <span>{dateFormat}</span>
       </div>
       <div className="message">{comment.message}</div>
-      {comment.id_user == localStorage.getItem("token") ? (
+      {comment.id_user == localStorage.getItem("token") && showOptions ? (
         <div className="options">
-          <span onClick={handleClickRemove}>remove</span>
+          <span className="remove-comment" onClick={handleClickRemove}>
+            remove
+          </span>
         </div>
       ) : null}
     </div>

@@ -204,3 +204,16 @@ nav ul > li {
 nav ul > li a {
   text-decoration: none;
 }
+
+.comment .options {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.comment .options .remove-comment {
+  color: red;
+}
+.comment .options .remove-comment:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
