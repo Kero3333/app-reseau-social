@@ -15,6 +15,7 @@ use("linkedin");
 //   { $project: { id: 1, _id: 0 } }
 // );
 
+// db.user.deleteMany({ email: { $gte: "" } });
 db.user.find();
 
 // create user (inscription)

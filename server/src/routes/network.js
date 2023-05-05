@@ -3,7 +3,7 @@ const ObjectId = require("mongodb").ObjectId;
 
 const network = require("express").Router();
 
-network.post("/add", async (req, res) => {
+network.post("/", async (req, res) => {
   const { id, userId } = req.body;
   try {
     const isAlreadyAsked = await database

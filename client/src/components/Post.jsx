@@ -4,8 +4,10 @@ import defaultAvatar from "../../public/assets/img/profile-default.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export const Post = ({ userId, profile, post }) => {
+  const navigate = useNavigate();
   const [postId, setPostId] = useState("");
   const [dateFormat, setDateFormat] = useState("");
   const [nbComments, setNbComments] = useState(0);
@@ -13,6 +15,10 @@ export const Post = ({ userId, profile, post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [displayComments, setDisplayComments] = useState(false);
   const [comments, setComments] = useState([]);
+  const [showOptions, setShowOptions] = useState(false);
+  const [isRemoved, setIsRemoved] = useState(false);
+  const [toModified, setToModified] = useState(false);
+  const [message, setMessage] = useState(post.message);
 
   useEffect(() => {
     setPostId(`${userId}-${post.id}`);
@@ -30,6 +36,7 @@ export const Post = ({ userId, profile, post }) => {
     const userIsInLikesArr = post.likes.findIndex((el) => el.id_user == idUser);
 
     if (userIsInLikesArr > -1) setIsLiked(true);
+    console.log(userId);
   }, [post]);
 
   const handleClick = () => {
@@ -38,8 +45,8 @@ export const Post = ({ userId, profile, post }) => {
 
   const handleClickLike = () => {
     const data = {
-      id: localStorage.getItem("token"),
-      userId: userId,
+      id: userId,
+      userId: localStorage.getItem("token"),
       postId: post.id,
     };
     fetch("http://localhost:3000/api/post/like", {
@@ -63,13 +70,13 @@ export const Post = ({ userId, profile, post }) => {
       if (message.length < 1) return false;
       const id = localStorage.getItem("token");
       const data = {
-        id,
+        id: userId,
         postId: post.id,
-        userId: userId,
+        userId: id,
         message,
       };
 
-      fetch("http://localhost:3000/api/post/comment/add", {
+      fetch("http://localhost:3000/api/post/comment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -90,23 +97,105 @@ export const Post = ({ userId, profile, post }) => {
     }
   };
 
-  return (
-    <div className="post" id={postId}>
+  const handleMouseOver = () => setShowOptions(true);
+  const handleMouseLeave = () => setShowOptions(false);
+
+  const handleClickRemove = () => {
+    const data = {
+      id: userId,
+      postId: postId.split("-")[1],
+    };
+
+    fetch("http://localhost:3000/api/post", {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (res.status == 200) {
+          setIsRemoved(true);
+        }
+      })
+      .catch((e) => console.error(e));
+  };
+  const handleClickModify = () => setToModified(true);
+
+  const handleChange = (e) => setMessage(e.target.value);
+
+  const handleKeyDownMessage = (e) => {
+    if (e.key == "Enter") {
+      const message = e.target.value;
+
+      const data = {
+        id: userId,
+        postId: postId.split("-")[1],
+        message,
+        visiblity: "public",
+      };
+
+      fetch("http://localhost:3000/api/post", {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => {
+          if (res.status == 200) setToModified(false);
+        })
+        .catch((e) => console.error(e));
+    }
+  };
+
+  const handleClickProfile = () => navigate(`/profile/${userId}`);
+
+  return !isRemoved ? (
+    <div
+      className="post"
+      id={postId}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
+    >
+      {userId == localStorage.getItem("token") && showOptions ? (
+        <div className="options">
+          <span className="remove" onClick={handleClickRemove}>
+            remove
+          </span>
+          <span className="modify" onClick={handleClickModify}>
+            modify
+          </span>
+        </div>
+      ) : null}
       <div className="infos">
         <div className="post-profile">
           <div className="post-image">
             <img
               src={profile.avatar != "" ? profile.avatar : defaultAvatar}
               alt="avatar.png"
+              onClick={handleClickProfile}
             />
           </div>
-          <span>
+          <span onClick={handleClickProfile}>
             {profile.firstname} {profile.lastname}
           </span>
         </div>
         <span>{dateFormat}</span>
       </div>
-      <div className="message">{post.message}</div>
+      {toModified ? (
+        <div className="message">
+          <textarea
+            name="message"
+            value={message}
+            onKeyDown={handleKeyDownMessage}
+            onChange={handleChange}
+            rows={4}
+          />
+        </div>
+      ) : (
+        <div className="message">{message}</div>
+      )}
       <div className="likes-comments">
         <div className="likes" onClick={handleClickLike}>
           <FontAwesomeIcon
@@ -153,5 +242,5 @@ export const Post = ({ userId, profile, post }) => {
         false
       )}
     </div>
-  );
+  ) : null;
 };

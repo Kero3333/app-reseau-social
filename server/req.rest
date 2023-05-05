@@ -2,15 +2,19 @@
 @port = 3000
 @host = {{hostname}}:{{port}}
 
+### Vérification du token
+GET http://{{host}}/api/auth/
+Content-Type: application/json
+token: 6447c6ebe3816e8b5f6baa19
+
 ### Connexion d'un utilisateur
 POST http://{{host}}/api/auth/signin
 Content-Type: application/json
 
 {
-    "email": "bob@mail.com",
+    "email": "bobby@mail.com",
     "password": "secret"
 }
-
 ### Creation d'un utilisateur
 POST http://{{host}}/api/auth/signup
 Content-Type: application/json
@@ -54,7 +58,7 @@ Content-Type: application/json
 
 {
     "id": "6447c6ebe3816e8b5f6baa19",
-    "postId": 1
+    "postId": 5
 }
 
 ### Ajouter/supprimer un like d'un post 
@@ -101,7 +105,7 @@ Content-Type: application/json
 }
 
 ### Demande d'ajout à son réseau 
-POST http://{{host}}/api/network/add
+POST http://{{host}}/api/network/
 Content-Type: application/json
 
 {
@@ -119,4 +123,4 @@ Content-Type: application/json
 }
 
 ### Récupérer les posts des autres utilisateur
-GET  http://{{host}}/api/posts/1
+GET  http://{{host}}/api/posts

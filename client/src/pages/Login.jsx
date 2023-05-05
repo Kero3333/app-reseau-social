@@ -1,24 +1,21 @@
-export const Login = ({ setToken }) => {
-  handleSubmit = (e) => {
+import { useNavigate } from "react-router-dom";
+import { Guard } from "../components/Guard";
+import { useContext, useEffect } from "react";
+import { TokenContext } from "..";
+
+export const Login = () => {
+  const navigate = useNavigate();
+  const { token, setToken } = useContext(TokenContext);
+
+  handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    fetch("http://localhost:3000/api/auth/signin", {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        localStorage.setItem("token", data);
-        setToken(data);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    const newToken = await Guard.login(email, password);
+    if (!newToken) return false;
+    setToken(newToken);
+    console.log(token);
+    navigate("/");
   };
 
   return (

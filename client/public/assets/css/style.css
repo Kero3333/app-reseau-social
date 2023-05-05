@@ -23,7 +23,7 @@ body {
 /* profile */
 .profile {
   display: flex;
-  margin: 5%;
+  margin: 5% 20%;
   justify-content: space-between;
 }
 .profile .profile-container {
@@ -37,7 +37,7 @@ body {
   flex: 1;
   margin-left: 1rem;
 }
-.profile .network-container div:first-child {
+.profile .network-container > div:first-child {
   height: 200px;
 }
 .profile .banner {
@@ -58,8 +58,15 @@ body {
   background: #fff5e8;
   padding: 1rem;
 }
+.profile .description div {
+  display: flex;
+}
+.profile .description button {
+  height: fit-content;
+  align-self: center;
+}
 .profile .description .name {
-  margin-left: 1rem;
+  margin: 0 1rem;
   font-size: 2rem;
   font-weight: bold;
 }
@@ -71,7 +78,7 @@ body {
   background-color: aliceblue;
   border-radius: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: center;
   justify-content: space-evenly;
   padding: 5%;
@@ -200,24 +207,196 @@ nav ul > li {
   font-size: 1.25rem;
   list-style: none;
 }
-
 nav ul > li a {
   text-decoration: none;
 }
-
-.comment .options {
+/* .comment .options {
+  display: flex;
+  flex-direction: row-reverse;
+} */
+.options {
   display: flex;
   flex-direction: row-reverse;
 }
-
-.comment .options .remove-comment {
+.options .remove {
   color: red;
 }
-.comment .options .modify-comment {
+.options .modify {
   color: blue;
   margin-right: 0.5rem;
 }
-.comment .options > span:hover {
+.options > span:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+.profile-container .profile-modify {
+  margin-right: 1rem;
+  display: flex;
+  transform: translateY(1.5rem);
+  justify-content: flex-end;
+  align-items: center;
+}
+.profile-container .profile-modify:hover {
+  cursor: pointer;
+}
+.profile-container .profile-modify svg {
+  margin-right: 0.5rem;
+  height: 1rem !important;
+}
+
+.profile-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5% 20%;
+  justify-content: center;
+  min-height: 80vh;
+  background-color: antiquewhite;
+}
+.profile-edit form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  background-color: #fff;
+  padding: 2rem;
+}
+.profile-edit form > input {
+  margin-bottom: 1rem;
+  line-height: 1.5rem;
+}
+.profile-edit form button {
+  width: fit-content;
+  align-self: center;
+}
+
+.home {
+  margin: 5% 20%;
+  display: flex;
+  flex-direction: column;
+}
+
+.home form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  background: antiquewhite;
+  padding: 2rem;
+}
+.home form button {
+  height: fit-content;
+  display: flex;
+  align-self: flex-end;
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-right: 2rem;
+  flex: 1;
+}
+.input-group input {
+  flex: 1;
+}
+
+.home .post {
+  display: flex;
+  flex-direction: column;
+  background: antiquewhite;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+.post-profile {
+  display: flex;
+  align-items: center;
+}
+.post textarea {
+  width: 100%;
+}
+.post-image {
+  display: block;
+  background-color: white;
+  border-radius: 100%;
+  height: 60px;
+  width: 60px;
+  margin-right: 1rem;
+}
+.post-image img {
+  width: inherit;
+  border-radius: 100%;
+}
+.post .infos {
+  display: flex;
+  justify-content: space-between;
+  line-height: 1.5rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+.message {
+  margin: 0% 10%;
+}
+.likes-comments {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.likes-comments > div {
+  display: flex;
+  align-items: center;
+}
+.likes-comments > div:hover {
+  cursor: pointer;
+}
+.likes-comments > div > span {
+  margin-left: 0.5rem;
+}
+.comments-section {
+  display: flex;
+  flex-direction: column;
+}
+.comments-section input {
+  margin: 1rem 0;
+  width: 80%;
+  align-self: center;
+  line-height: 1.5rem;
+}
+.comments-content {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  max-height: 30vh;
+  overflow-y: auto;
+}
+.comment {
+  padding: 0.5rem;
+  width: 90%;
+  align-items: center;
+  background-color: white;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+.comment .comment-infos {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  line-height: 1rem;
+  display: flex;
+}
+.comment .comment-profile {
+  display: flex;
+  align-items: center;
+}
+
+.comment .comment-image {
+  display: block;
+  height: 30px;
+  width: 30px;
+  margin-right: 1rem;
+}
+.comment-image img {
+  width: inherit;
+  border-radius: 100%;
+}
+
+.post-profile > *:hover {
+  cursor: pointer;
 }

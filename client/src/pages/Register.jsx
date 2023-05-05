@@ -1,4 +1,10 @@
-export const Register = ({ setToken }) => {
+import { useContext, useNavigate } from "react";
+import { TokenContext } from "..";
+
+export const Register = () => {
+  const { setToken } = useContext(TokenContext);
+  const navigate = useNavigate();
+
   handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -16,8 +22,10 @@ export const Register = ({ setToken }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        localStorage.setItem("token", data);
-        setToken(data);
+        const { id } = data;
+        localStorage.setItem("token", id);
+        setToken(id);
+        navigate("/");
       })
       .catch((e) => {
         console.error(e);

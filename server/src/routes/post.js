@@ -3,13 +3,11 @@ const ObjectId = require("mongodb").ObjectId;
 
 const post = require("express").Router();
 
-post.post("/add", async (req, res) => {
+post.post("/", async (req, res) => {
   try {
     const { id, message, visibility } = req.body;
 
-    const {
-      posts: { id: lastPostId },
-    } = await database
+    const posts = await database
       .collection("user")
       .aggregate([
         { $match: { "profile.lastname": "Miller" } },
@@ -19,6 +17,9 @@ post.post("/add", async (req, res) => {
         { $project: { "posts.id": 1, _id: 0 } },
       ])
       .next();
+
+    let lastPostId = 0;
+    if (posts) lastPostId = posts.posts.id;
 
     const { matchedCount } = await database.collection("user").updateOne(
       { _id: new ObjectId(id) },
@@ -43,10 +44,10 @@ post.post("/add", async (req, res) => {
   }
 });
 
-post.post("/modify", async (req, res) => {
+post.put("/", async (req, res) => {
   try {
     const { id, postId, message, visibility } = req.body;
-    const { matchedCount } = await database.collection("user").updateOne(
+    const { modifiedCount } = await database.collection("user").updateOne(
       { _id: new ObjectId(id) },
       {
         $set: {
@@ -54,9 +55,9 @@ post.post("/modify", async (req, res) => {
           "posts.$[post].visibility": visibility,
         },
       },
-      { arrayFilters: [{ "post.id": { $eq: postId } }] }
+      { arrayFilters: [{ "post.id": { $eq: +postId } }] }
     );
-    if (!matchedCount) return res.sendStatus(404);
+    if (!modifiedCount) return res.sendStatus(404);
     res.sendStatus(200);
   } catch (e) {
     console.error(e);
@@ -71,7 +72,7 @@ post.delete("/", async (req, res) => {
       { _id: new ObjectId(id) },
       {
         $pull: {
-          posts: { id: postId },
+          posts: { id: +postId },
         },
       }
     );
@@ -130,7 +131,7 @@ post.post("/like", async (req, res) => {
   }
 });
 
-post.post("/comment/add", async (req, res) => {
+post.post("/comment", async (req, res) => {
   try {
     const { id, postId, userId, message } = req.body;
 
@@ -170,7 +171,7 @@ post.post("/comment/add", async (req, res) => {
   }
 });
 
-post.post("/comment/modify", async (req, res) => {
+post.put("/comment", async (req, res) => {
   try {
     const { id, postId, commentId, message } = req.body;
 
@@ -194,7 +195,7 @@ post.post("/comment/modify", async (req, res) => {
   }
 });
 
-post.delete("/comment/remove", async (req, res) => {
+post.delete("/comment", async (req, res) => {
   try {
     const { id, postId, commentId } = req.body;
     const { modifiedCount } = await database

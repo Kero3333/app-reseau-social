@@ -82,8 +82,8 @@ export const Comment = ({
         message,
       };
 
-      fetch("http://localhost:3000/api/post/comment/modify", {
-        method: "POST",
+      fetch("http://localhost:3000/api/post/comment", {
+        method: "PUT",
         headers: {
           "content-type": "application/json",
         },
@@ -130,10 +130,10 @@ export const Comment = ({
       )}
       {comment.id_user == localStorage.getItem("token") && showOptions ? (
         <div className="options">
-          <span className="remove-comment" onClick={handleClickRemove}>
+          <span className="remove" onClick={handleClickRemove}>
             remove
           </span>
-          <span className="modify-comment" onClick={handleClickModify}>
+          <span className="modify" onClick={handleClickModify}>
             modify
           </span>
         </div>

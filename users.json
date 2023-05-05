@@ -1,35 +1,17 @@
 [
   {
+    "_id": {
+      "$oid": "6447c6ebe3816e8b5f6baa19"
+    },
     "email": "bob@mail.com",
     "password": "secret",
     "profile": {
       "firstname": "Bob",
-      "lastname": "Kravengher",
-      "avatar": "avatar.png",
-      "description": "",
+      "lastname": "Miller",
+      "avatar": "http://res.cloudinary.com/dgsxlxlqs/image/upload/h_150,w_150/6447c6ebe3816e8b5f6baa19",
       "email": false
     },
-    "posts": [
-      {
-        "id": 0,
-        "message": "Hello",
-        "date": 0,
-        "visibility": "public",
-        "comments": [
-          {
-            "id": 0,
-            "id_user": 0,
-            "message": "World !",
-            "date": 0
-          }
-        ],
-        "likes": [
-          {
-            "id_user": 0
-          }
-        ]
-      }
-    ],
+    "posts": [],
     "network": [
       {
         "id_user": 1,
@@ -42,6 +24,9 @@
     ]
   },
   {
+    "_id": {
+      "$oid": "6447c6ebe3816e8b5f6baa1a"
+    },
     "email": "marc@mail.com",
     "password": "secret",
     "profile": {
@@ -63,11 +48,24 @@
             "id_user": 1,
             "message": "World !",
             "date": 0
+          },
+          {
+            "id": 1,
+            "id_user": {
+              "$oid": "6447c6ebe3816e8b5f6baa19"
+            },
+            "message": "fdsfsdf",
+            "date": 1683277835523
           }
         ],
         "likes": [
           {
             "id_user": 1
+          },
+          {
+            "id_user": {
+              "$oid": "6447c6ebe3816e8b5f6baa19"
+            }
           }
         ]
       }
@@ -78,5 +76,35 @@
         "status": "confirmed"
       }
     ]
+  },
+  {
+    "_id": {
+      "$oid": "6447c859956d8adbbde0baad"
+    },
+    "email": "bobby@mail.com",
+    "password": "secret",
+    "profile": {
+      "firstname": "bob",
+      "lastname": "by",
+      "avatar": "",
+      "email": false
+    },
+    "posts": [],
+    "network": []
+  },
+  {
+    "_id": {
+      "$oid": "64492ce25fea9f1e7cf99f5d"
+    },
+    "email": "kevin.r@institutsolacroup.com",
+    "password": "secret",
+    "profile": {
+      "firstname": "kevin",
+      "lastname": "robic",
+      "avatar": "",
+      "email": false
+    },
+    "posts": [],
+    "network": []
   }
 ]

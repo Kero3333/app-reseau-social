@@ -3,6 +3,15 @@ const ObjectId = require("mongodb").ObjectId;
 
 const user = require("express").Router();
 
+const cloudinary = require("cloudinary").v2;
+
+// Configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDNAME,
+  api_key: process.env.CLOUDAPIKEY,
+  api_secret: process.env.CLOUDAPIKEYSECRET,
+});
+
 user.get("/:id", async (req, res) => {
   if (!req.params.id) return res.sendStatus(400);
 
@@ -27,6 +36,17 @@ user.post("/:id", async (req, res) => {
 
   const _id = new ObjectId(req.params.id);
   const { email, firstname, lastname, avatar, emailVisibility } = req.body;
+
+  const avatarUrl = await cloudinary.uploader.upload(avatar, {
+    public_id: `${_id}`,
+  });
+
+  const url = cloudinary.url(`${_id}`, {
+    width: 150,
+    height: 150,
+    Crop: "fill",
+  });
+
   try {
     const { matchedCount } = await database.collection("user").updateOne(
       { _id },
@@ -36,7 +56,7 @@ user.post("/:id", async (req, res) => {
           profile: {
             firstname,
             lastname,
-            avatar,
+            avatar: url,
             email: emailVisibility,
           },
         },

@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { TokenContext } from "..";
+
 export const Navbar = () => {
+  const { token } = useContext(TokenContext);
+
   return (
     <div className="navbar">
       <nav>
@@ -8,7 +13,7 @@ export const Navbar = () => {
           </li>
           <li>Network</li>
           <li>
-            <a href="/profile">Profile</a>
+            <a href={`/profile/${token}`}>Profile</a>
           </li>
         </ul>
       </nav>
