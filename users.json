@@ -1,70 +1,68 @@
 [
   {
     "_id": {
-      "$oid": "6447c6ebe3816e8b5f6baa19"
+      "$oid": "6454f1bfe45b822379e1b5f9"
     },
-    "email": "bob@mail.com",
+    "email": "bob@miller.com",
     "password": "secret",
     "profile": {
       "firstname": "Bob",
       "lastname": "Miller",
-      "avatar": "http://res.cloudinary.com/dgsxlxlqs/image/upload/h_150,w_150/6447c6ebe3816e8b5f6baa19",
+      "avatar": "http://res.cloudinary.com/dgsxlxlqs/image/upload/h_150,w_150/6454f1bfe45b822379e1b5f9",
       "email": false
     },
-    "posts": [],
+    "posts": [
+      {
+        "id": 1,
+        "message": "Bonjour",
+        "date": 1683289378118,
+        "visibility": null,
+        "comments": [],
+        "likes": []
+      }
+    ],
     "network": [
       {
-        "id_user": 1,
-        "status": "confirmed"
-      },
-      {
-        "id_user": 2,
-        "status": "pending"
+        "id_user": {
+          "$oid": "6454f3e944eaab9f478184b9"
+        },
+        "status": "pending",
+        "sender": 1
       }
     ]
   },
   {
     "_id": {
-      "$oid": "6447c6ebe3816e8b5f6baa1a"
+      "$oid": "6454f3e944eaab9f478184b9"
     },
-    "email": "marc@mail.com",
+    "email": "jack@sparrow",
     "password": "secret",
     "profile": {
-      "firstname": "Marc",
-      "lastname": "Frostenborg",
-      "avatar": "avatar.png",
-      "description": "Hello my name is Marc",
+      "firstname": "Jack",
+      "lastname": "Sparrow",
+      "avatar": "http://res.cloudinary.com/dgsxlxlqs/image/upload/h_150,w_150/6454f3e944eaab9f478184b9",
       "email": false
     },
     "posts": [
       {
-        "id": 0,
+        "id": 2,
         "message": "Hello",
-        "date": 0,
-        "visibility": "private",
+        "date": 1683289078771,
+        "visibility": "public",
         "comments": [
           {
             "id": 0,
-            "id_user": 1,
-            "message": "World !",
-            "date": 0
-          },
-          {
-            "id": 1,
             "id_user": {
-              "$oid": "6447c6ebe3816e8b5f6baa19"
+              "$oid": "6454f1bfe45b822379e1b5f9"
             },
-            "message": "fdsfsdf",
-            "date": 1683277835523
+            "message": "Bonjour",
+            "date": 1683291273396
           }
         ],
         "likes": [
           {
-            "id_user": 1
-          },
-          {
             "id_user": {
-              "$oid": "6447c6ebe3816e8b5f6baa19"
+              "$oid": "6454f1bfe45b822379e1b5f9"
             }
           }
         ]
@@ -72,39 +70,19 @@
     ],
     "network": [
       {
-        "id_user": 0,
-        "status": "confirmed"
+        "id_user": {
+          "$oid": "645500ee70475437f228f589"
+        },
+        "status": "pending",
+        "sender": 1
+      },
+      {
+        "id_user": {
+          "$oid": "6454f1bfe45b822379e1b5f9"
+        },
+        "status": "pending",
+        "sender": 0
       }
     ]
-  },
-  {
-    "_id": {
-      "$oid": "6447c859956d8adbbde0baad"
-    },
-    "email": "bobby@mail.com",
-    "password": "secret",
-    "profile": {
-      "firstname": "bob",
-      "lastname": "by",
-      "avatar": "",
-      "email": false
-    },
-    "posts": [],
-    "network": []
-  },
-  {
-    "_id": {
-      "$oid": "64492ce25fea9f1e7cf99f5d"
-    },
-    "email": "kevin.r@institutsolacroup.com",
-    "password": "secret",
-    "profile": {
-      "firstname": "kevin",
-      "lastname": "robic",
-      "avatar": "",
-      "email": false
-    },
-    "posts": [],
-    "network": []
   }
 ]
